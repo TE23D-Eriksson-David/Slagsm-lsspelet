@@ -4,6 +4,7 @@ using SC = System.Console;
 //
 // Slumpstiden V.1 som kommer bara vara på en linije!!
 //
+bool FirstTime = true;
 
 bool ChosingAponent = true;
 bool Aponent_Punch = false;
@@ -42,9 +43,10 @@ RESTART();
 
 void START() /* Title screen */ 
 {
+    if (FirstTime) {
     SC.WriteLine("ASCII place holder");
     SC.WriteLine("Press Anything to start");
-    SC.ReadLine();
+    SC.ReadLine();}
 }
 
 
@@ -102,11 +104,14 @@ switch ((string)(Fight_Choice)){
     case (string)("1"):
     fight_Punch = true;
     Damage = Random.Shared.Next(20, 44);
+    SC.WriteLine("ASCI"); // You punch, normal conect
     if (Aponent_Block) {
         Damage = Random.Shared.Next(5, 17);
+        SC.WriteLine("ASCI"); // You punch, aponent block
     } else if (Aponent_Pary) {
         Damage = Random.Shared.Next(3, 7);
         Player_Helth =- Random.Shared.Next(15, 33);
+        SC.WriteLine("ASCI"); // You punch, aponent pary
     }
     Aponent_Helth =- Damage; 
     break;
@@ -148,11 +153,44 @@ switch ((string)(Fight_Choice)){
 
 } 
 
-void Fight_TrashTalk() {}
+void Fight_TrashTalk() {
+    SC.WriteLine("Trash talk");
+    SC.ReadLine();
+}
 
-void RESULT() {}
+void RESULT() {
+if (fight_Consed) {
+    SC.WriteLine("ASCII");
+    SC.WriteLine("Placeholder Aponent mocking the player");
+    SC.WriteLine("You Conced");
+    SC.WriteLine("Press anything to go back to start");
+    SC.ReadLine();
+}
 
-void RESTART() {}
+
+}
+
+void RESTART() { /* Gör allting för att kunna köra igen (Tar en tillbacka till chosing Aponents) */
+FirstTime = false;
+
+ChosingAponent = true;
+Aponent_Punch = false;
+Aponent_kick = false;
+Aponent_Block = false;
+Aponent_Pary = false;
+
+Fighting = true;
+
+/* Vall under striden */
+fight_Punch = false;
+fight_kick = false;
+fight_block = false;
+fight_pary = false;
+fight_Consed = false;
+/* ------------------------ */
+Player_Helth = 100;
+
+}
 
 
 
