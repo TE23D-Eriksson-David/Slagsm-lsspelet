@@ -5,7 +5,30 @@ using SC = System.Console;
 // Slumpstiden V.1 som kommer bara vara på en linije!!
 //
 
+bool ChosingAponent = true;
+
+
 while /*MAIN*/ (true) {
+
+START();
+NAME();
+APONENT();
+FIGHT();
+RESULT();
+RESTART();
+
+} /*WHILE MAIN*/
+
+
+
+
+void START() /* Title screen */ 
+{
+    SC.WriteLine("ASCII place holder");
+    SC.WriteLine("Press Anything to start");
+    SC.ReadLine();
+}
+
 
 void NAME() { /*Tar in spelarens namn*/
 SC.WriteLine("Skriv dit namn:");
@@ -14,45 +37,22 @@ while (name.Length < 3) {SC.Clear(); SC.WriteLine("Skriv dit namn:"); name = SC.
 SC.ReadLine();
 }
 
-void APONENT(){ /*Inehåller motståndare och ger ut värden för dem */
-
-
-
+void APONENT() { /*Inehåller vall av motståndare och ger ut värden för dem */
+while (ChosingAponent == true) {
+SC.WriteLine("Chose your oponent:");
+SC.WriteLine("Aponent List whit case sats");
+string Aponent_id = SC.ReadLine();
+                                }
 }
 
 
 void FIGHT() {  /* Utför slump striden */
 SC.WriteLine("Fight Begin!");
-
-
 }
 
-void WIN() {}
-void LOSE(){}
-void RESTART(){}
+void RESULT() {}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-} /* WHILE MAIN /*
-
-
-
+void RESTART() {}
 
 
 
