@@ -27,18 +27,22 @@ bool fight_Lose = false;
 
 int Aponent_Choice=0;
 int Player_Helth=100;
+Player_Helth = Math.Max(0,100);
 int Aponent_Helth=0;
 int Damage=0;
 int Coins=0;
+int HitChance;
 
 string name;
-string red = "";
+string Aponent_move = "";
 
 while /*MAIN*/ (true) {
 
 START();
 NAME();
 while (true) {
+SUB_MENUE();
+//SHOP();
 APONENT();
 FIGHT();
 RESULT();
@@ -65,6 +69,10 @@ SC.WriteLine("Write your player name:");
 name = SC.ReadLine();
 while (name.Length < 3) {SC.Clear(); SC.WriteLine("Write your player name:"); name = SC.ReadLine();}
 }
+
+void SUB_MENUE(){}
+
+void SHOP(){}
 
 void APONENT() { /*Inehåller vall av motståndare och ger ut värden för dem */
 while (ChosingAponent == true) {
@@ -95,10 +103,10 @@ switch ((string)(Aponent_id)) {
     SC.Clear();
     SC.WriteLine("You have chosen aponent tre.");
     SC.WriteLine("ASCI & Stats for aponetn Placeholder");
-    
     break;
 }
                                 }
+    Aponent_Helth = Math.Max(0,Aponent_Helth);
     SC.WriteLine("press any key to continue");
     SC.ReadLine();
 }
@@ -119,8 +127,8 @@ SC.WriteLine("Fight Choices: (1) Punch  : (2) Kick  : (3) Block : (4) Pary  : (5
 Damage = 0;
 
 Aponent_Choice = Random.Shared.Next(0,4);
-if (Aponent_Choice==1){Aponent_Block=true; red ="Aponent block";}else if(Aponent_Choice==2){Aponent_Pary=true; red ="Aponent Pary";}else if(Aponent_Choice==3){Aponent_Punch=true; red ="Aponent punch";}else if(Aponent_Choice==4){Aponent_kick=true; red ="Aponent kick";}
-
+if (Aponent_Choice==1){Aponent_Block=true; Aponent_move ="Aponent block";}else if(Aponent_Choice==2){Aponent_Pary=true; Aponent_move ="Aponent Pary";}else if(Aponent_Choice==3){Aponent_Punch=true; Aponent_move ="Aponent punch";}else if(Aponent_Choice==4){Aponent_kick=true; Aponent_move ="Aponent kick";}
+HitChance = Random.Shared.Next(1, 11);
 
 string Fight_Choice = SC.ReadLine();
 switch ((string)(Fight_Choice)){
@@ -139,8 +147,11 @@ switch ((string)(Fight_Choice)){
         SC.Clear();
         SC.WriteLine("ASCI"); // You punch, aponent pary
     }
-    SC.WriteLine($"{red}");
+    SC.WriteLine($"{Aponent_move}");
+    SC.WriteLine($"{HitChance}");
+    if (HitChance < 8) {
     Aponent_Helth = Aponent_Helth - Damage; 
+    }
     break;
     case (string)("2"):
     fight_kick = true;
@@ -151,15 +162,18 @@ switch ((string)(Fight_Choice)){
         Damage = Random.Shared.Next(1, 15);
         Player_Helth =  Player_Helth - Random.Shared.Next(30, 45);
     }
-    SC.WriteLine($"{red}");
+    SC.WriteLine($"{Aponent_move}");
+    SC.WriteLine($"{HitChance}");
+    if (HitChance < 6) {
     Aponent_Helth =  Aponent_Helth - Damage; 
+    }
     break;
     case (string)("3"):
     fight_block = true;
     if (Aponent_Punch || Aponent_kick) {
        Player_Helth =   Player_Helth - Random.Shared.Next(5, 30); 
     }
-    SC.WriteLine($"{red}");
+    SC.WriteLine($"{Aponent_move}");
     break;
     case (string)("4"):
     fight_pary = true;
@@ -168,7 +182,7 @@ switch ((string)(Fight_Choice)){
         Damage = Random.Shared.Next(30, 45);
         Aponent_Helth =  Aponent_Helth - Damage; 
     }
-    SC.WriteLine($"{red}");
+    SC.WriteLine($"{Aponent_move}");
     break;
     case (string)("5"):
     fight_Consed = true;
@@ -181,8 +195,8 @@ switch ((string)(Fight_Choice)){
 SC.ReadLine();
 SC.Clear();
 
-if (Aponent_Helth < 0 && Player_Helth < 0) {fight_Draw=true;    Fighting = false;}
-else if (Aponent_Helth<0) {fight_Win=true;  Fighting = false;} else if (Player_Helth<0){fight_Lose=true;    Fighting = false;} 
+if (Aponent_Helth == 0 && Player_Helth == 0) {fight_Draw=true;    Fighting = false;}
+else if (Aponent_Helth==0) {fight_Win=true;  Fighting = false;} else if (Player_Helth==0){fight_Lose=true;    Fighting = false;} 
 
 } /* While Fhigting*/
 
