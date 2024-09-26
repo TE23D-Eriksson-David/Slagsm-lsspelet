@@ -13,6 +13,10 @@ bool Aponent_Block = false;
 bool Aponent_Pary = false;
 
 bool Fighting = true;
+bool SubMenue = true;
+bool Shop = false;
+bool Bet = false;
+bool TrashTalk = false;
 
 /* Vall under striden */
 bool fight_Punch = false;
@@ -26,15 +30,21 @@ bool fight_Lose = false;
 /* ------------------------ */
 
 int Aponent_Choice=0;
+int Aponent1Bet=0;
+int Aponent2Bet=0;
+int Aponent3Bet=0;
+int i=0;
 int Player_Helth=100;
 Player_Helth = Math.Max(0,100);
 int Aponent_Helth=0;
 int Damage=0;
 int Coins=0;
+int Bet_Coins=0;
 int HitChance;
 
 string name;
 string Aponent_move = "";
+string choice = "";
 
 while /*MAIN*/ (true) {
 
@@ -42,8 +52,9 @@ START();
 NAME();
 while (true) {
 SUB_MENUE();
-//SHOP();
+SHOP();
 APONENT();
+BET();
 FIGHT();
 RESULT();
 RESTART();
@@ -70,9 +81,83 @@ name = SC.ReadLine();
 while (name.Length < 3) {SC.Clear(); SC.WriteLine("Write your player name:"); name = SC.ReadLine();}
 }
 
-void SUB_MENUE(){}
+void SUB_MENUE(){
+    while (SubMenue == true) {
+        SC.WriteLine("(1) Chosce Aponent    (2) Shop    (3) Bet");
+        choice = SC.ReadLine();
+if (choice == "1") {SubMenue = false;} else if (choice == "2") {SubMenue = false; Shop = true;} else if (choice == "3") {SubMenue = false; Bet = true;}
+    }
+}
 
-void SHOP(){}
+void SHOP(){
+    if (Shop == true) {
+        while (Shop == true) {
+SC.WriteLine($@"Shop    (1) (2) (3)");
+choice = SC.ReadLine();
+switch ((string)(choice)) {
+case (string)("1"):
+SC.WriteLine("one");
+SC.ReadLine();
+Shop = false;
+break; 
+case (string)("2"):
+SC.WriteLine("two");
+SC.ReadLine();
+Shop = false;
+break; 
+case (string)("3"):
+SC.WriteLine("three");
+SC.ReadLine();
+Shop = false;
+break; 
+
+}
+        } // while
+    } // if  
+
+} // SHOP
+
+
+void BET(){
+if (Bet == true) {
+while (Bet == true) {
+    choice = "";
+    i = 1;
+SC.WriteLine("Beting place  bet on (1) (2) (3) ");
+SC.WriteLine(@$"Avileble Coins {Coins}");
+choice = SC.ReadLine();
+switch ((string)(choice)){
+
+    case (string)("1"):
+    while (i == 1) {
+    SC.WriteLine("How mutch do you want to bet (1) 10   (2) 30  (3) 50");
+    choice = SC.ReadLine();
+    if (choice=="1" && Coins < 10){Coins = Coins - 10; Aponent1Bet = Aponent1Bet + 10;} else if (choice=="2" && Coins < 30){Coins = Coins - 30; Aponent2Bet = Aponent2Bet + 30; } else if (choice=="3" && Coins < 50){Coins = Coins - 50; Aponent3Bet = Aponent3Bet + 50; }
+    i = 0;
+    }
+    break;
+
+    case (string)("2"):
+    while (i == 1) {
+    SC.WriteLine("How mutch do you want to bet (1) 10   (2) 30  (3) 50");
+    choice = SC.ReadLine();
+    if (choice=="1" && Coins < 10){Coins = Coins - 10; Aponent1Bet = Aponent1Bet + 10;} else if (choice=="2" && Coins < 30){Coins = Coins - 30; Aponent2Bet = Aponent2Bet + 30; } else if (choice=="3" && Coins < 50){Coins = Coins - 50; Aponent3Bet = Aponent3Bet + 50; }
+    i = 0;
+    }
+    break;
+
+    case (string)("3"):
+    while (i == 1) {
+    SC.WriteLine("How mutch do you want to bet (1) 10   (2) 30  (3) 50");
+    choice = SC.ReadLine();
+    if (choice=="1" && Coins < 10){Coins = Coins - 10; Aponent1Bet = Aponent1Bet + 10;} else if (choice=="2" && Coins < 30){Coins = Coins - 30; Aponent2Bet = Aponent2Bet + 30; } else if (choice=="3" && Coins < 50){Coins = Coins - 50; Aponent3Bet = Aponent3Bet + 50; }
+    i = 0;
+    }
+    break;
+}
+} //while
+} //if
+} // BET
 
 void APONENT() { /*Inehåller vall av motståndare och ger ut värden för dem */
 while (ChosingAponent == true) {
@@ -205,6 +290,7 @@ else if (Aponent_Helth==0) {fight_Win=true;  Fighting = false;} else if (Player_
 void Fight_TrashTalk() {
     SC.Clear();
     SC.WriteLine("Trash talk");
+    SC.ReadLine();
 }
 
 void RESULT() {
@@ -263,60 +349,3 @@ fight_Draw = false;
 Player_Helth = 100;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-while (true){
-int card = Random.Shared.Next(1, 53); // inclusivt golv, exlusivt tak. kommer ge 1 men kommer inte ge 53 utan en lägre
-SC.WriteLine(card);
-SC.ReadLine();
-
-
-SC.WriteLine("Skriv dit namn:");    string name = SC.ReadLine();
-while (name.Length < 3) {SC.Clear(); SC.WriteLine("skriv in dit namn namn sa jag dumhuvve"); name = SC.ReadLine();}
-SC.ReadLine();
-}
-*/
