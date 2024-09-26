@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using SC = System.Console;
 
 //
@@ -14,6 +16,7 @@ bool Aponent_Pary = false;
 
 bool Fighting = true;
 bool SubMenue = true;
+bool Main_Menue = true;
 bool Shop = false;
 bool Bet = false;
 bool TrashTalk = false;
@@ -34,6 +37,7 @@ int Aponent1Bet=0;
 int Aponent2Bet=0;
 int Aponent3Bet=0;
 int i=0;
+int T=0;
 int Player_Helth=100;
 Player_Helth = Math.Max(0,100);
 int Aponent_Helth=0;
@@ -51,10 +55,12 @@ while /*MAIN*/ (true) {
 START();
 NAME();
 while (true) {
+    while (Main_Menue){
 SUB_MENUE();
 SHOP();
-APONENT();
 BET();
+    }
+APONENT();
 FIGHT();
 RESULT();
 RESTART();
@@ -83,16 +89,22 @@ while (name.Length < 3) {SC.Clear(); SC.WriteLine("Write your player name:"); na
 
 void SUB_MENUE(){
     while (SubMenue == true) {
-        SC.WriteLine("(1) Chosce Aponent    (2) Shop    (3) Bet");
+        SC.Clear();
+        SC.WriteLine(@"Chose your next action by writing it's coresponding number and then pressing Enter
+        By chosing option 'Aponent' You will aoutomaticly be locked out of this menue, be aware!");
+        SC.WriteLine("(1) Chosce Aponent    (2) Shop    (3) Bet on Aponent");
         choice = SC.ReadLine();
-if (choice == "1") {SubMenue = false;} else if (choice == "2") {SubMenue = false; Shop = true;} else if (choice == "3") {SubMenue = false; Bet = true;}
+if (choice == "1") {SubMenue = false; Main_Menue = false;} else if (choice == "2") {SubMenue = false; Shop = true;} else if (choice == "3") {SubMenue = false; Bet = true;}
     }
+    SC.Clear();
 }
 
 void SHOP(){
     if (Shop == true) {
         while (Shop == true) {
-SC.WriteLine($@"Shop    (1) (2) (3)");
+            SC.Clear();
+        SC.WriteLine("Here you can buy things for your Carakter, Cosmetics, Buffs to his stats, and so on..");
+SC.WriteLine($@"Shop    !!Unfinished, Work in progress!! (1) (2) (3)");
 choice = SC.ReadLine();
 switch ((string)(choice)) {
 case (string)("1"):
@@ -114,7 +126,7 @@ break;
 }
         } // while
     } // if  
-
+SubMenue = true;
 } // SHOP
 
 
@@ -123,23 +135,34 @@ if (Bet == true) {
 while (Bet == true) {
     choice = "";
     i = 1;
-SC.WriteLine("Beting place  bet on (1) (2) (3) ");
-SC.WriteLine(@$"Avileble Coins {Coins}");
+    SC.Clear();
+    SC.WriteLine(@"Here is the betting hall. You can bett against your aponent if you think you can bet them. 
+
+Beting is done whit coins, you can earn coins affter every fight you win. If you bet on a aponent and succed
+in wining agenst them, youl recive duble what you set in. Draws and Loses will forfit your bets making every thing a gamble
+But you can Consede whitch will make it so you only lose half of what you bet. Know god luck and let the best gambler win!  
+    ");
+SC.WriteLine(@$"Aponents to bet on    (1) Aponent1  (2) Aponent2 (3) Aponent    ||  Avileble Coins {Coins} ||
+Chosing (4) will exit the beting Hall");
+
+SC.WriteLine(@$"ASCII of art and stats so you know who youre schosing");
+
 choice = SC.ReadLine();
 switch ((string)(choice)){
 
     case (string)("1"):
     while (i == 1) {
-    SC.WriteLine("How mutch do you want to bet (1) 10   (2) 30  (3) 50");
+    SC.WriteLine(@"
+    How mutch are you willing to risk?  (1) 10 coins   (2) 30 coins  (3) 50 coins");
     choice = SC.ReadLine();
-    if (choice=="1" && Coins < 10){Coins = Coins - 10; Aponent1Bet = Aponent1Bet + 10;} else if (choice=="2" && Coins < 30){Coins = Coins - 30; Aponent2Bet = Aponent2Bet + 30; } else if (choice=="3" && Coins < 50){Coins = Coins - 50; Aponent3Bet = Aponent3Bet + 50; }
+    if (choice=="1" && Coins > 10){Coins = Coins - 10; Aponent1Bet = Aponent1Bet + 10;} else if (choice=="2" && Coins > 30){Coins = Coins - 30; Aponent2Bet = Aponent2Bet + 30; } else if (choice=="3" && Coins > 50){Coins = Coins - 50; Aponent3Bet = Aponent3Bet + 50; }
     i = 0;
     }
     break;
 
     case (string)("2"):
     while (i == 1) {
-    SC.WriteLine("How mutch do you want to bet (1) 10   (2) 30  (3) 50");
+    SC.WriteLine("How mutch are you willing to risk?  (1) 10 coins   (2) 30 coins  (3) 50 coins");
     choice = SC.ReadLine();
     if (choice=="1" && Coins < 10){Coins = Coins - 10; Aponent1Bet = Aponent1Bet + 10;} else if (choice=="2" && Coins < 30){Coins = Coins - 30; Aponent2Bet = Aponent2Bet + 30; } else if (choice=="3" && Coins < 50){Coins = Coins - 50; Aponent3Bet = Aponent3Bet + 50; }
     i = 0;
@@ -148,22 +171,34 @@ switch ((string)(choice)){
 
     case (string)("3"):
     while (i == 1) {
-    SC.WriteLine("How mutch do you want to bet (1) 10   (2) 30  (3) 50");
+    SC.WriteLine("How mutch are you willing to risk?  (1) 10 coins   (2) 30 coins  (3) 50 coins");
     choice = SC.ReadLine();
     if (choice=="1" && Coins < 10){Coins = Coins - 10; Aponent1Bet = Aponent1Bet + 10;} else if (choice=="2" && Coins < 30){Coins = Coins - 30; Aponent2Bet = Aponent2Bet + 30; } else if (choice=="3" && Coins < 50){Coins = Coins - 50; Aponent3Bet = Aponent3Bet + 50; }
     i = 0;
     }
     break;
+
+    case (string)("4"):
+    Bet = false;
+    break;
 }
 } //while
 } //if
+SubMenue = true;
 } // BET
 
 void APONENT() { /*Inehåller vall av motståndare och ger ut värden för dem */
 while (ChosingAponent == true) {
 SC.Clear();
-SC.WriteLine($"Chose your oponent: ASCII    Your name: {name}   Coins:{Coins}");
-SC.WriteLine("Aponent, List whit case sats (1) (2) (3)");
+SC.WriteLine(@"Here is where you chose your aponent, Rigt know theres only three ______, ______ and ______.
+They are difrently skilled, so I would advise you to chose well, ______ has the lest experience in thre ring
+ so Id say you take a swing at him! 
+ ");
+SC.WriteLine(@$"Chose your oponent: ASCII                Your name: {name}   Coins: {Coins}
+");
+SC.WriteLine(@$"Her at the botom you can se your bets, if youwe made any ;D. 
+Aponent 1 ______ Bet: {Aponent1Bet}     Aponent 2 _______ Bet: {Aponent2Bet}    Aponent 3 ________ Bet: {Aponent3Bet}");
+
 string Aponent_id = SC.ReadLine();
 switch ((string)(Aponent_id)) {
     case (string)("1"):
@@ -199,15 +234,17 @@ switch ((string)(Aponent_id)) {
 
 void FIGHT() {  /* Utför slump striden */
 SC.Clear();
-SC.WriteLine("Let the fight Begin!");
+
+SC.WriteLine(@"DING DING! 
+Let the fight BEGIN!");
 SC.WriteLine("ASCI");
-SC.WriteLine("Trash talk");
+Fight_TrashTalk();
 SC.ReadLine();
 SC.Clear();
 
 
 while (Fighting) { // Lopar tills Slagsmålet är över
-SC.WriteLine($"ASCI Aponents helth:{Aponent_Helth} your helth: {Player_Helth} your damage: {Damage}");
+SC.WriteLine($"ASCI     Aponents helth:{Aponent_Helth}  your helth:{Player_Helth}  your damage delt:{Damage}");
 SC.WriteLine("Fight Choices: (1) Punch  : (2) Kick  : (3) Block : (4) Pary  : (5) Consed  : (6) Trash Talk  :");
 Damage = 0;
 
@@ -289,38 +326,90 @@ else if (Aponent_Helth==0) {fight_Win=true;  Fighting = false;} else if (Player_
 
 void Fight_TrashTalk() {
     SC.Clear();
-    SC.WriteLine("Trash talk");
-    SC.ReadLine();
-}
+T = Random.Shared.Next(1, 7);
+switch ((int)(T)){
+case (int)(1):
+SC.WriteLine(@"*Fighter A steps forward, eyes locked on their opponent with a smirk.*
+You’re all hype, no bite! I’ve seen tougher competition in a mirror. You’re about to get dropped faster than your excuses after tonight. 
+Better enjoy this moment, because it’s the closest you'll ever get to the top. I’m ending you in under three rounds.");
+break;
+
+case (int)(2):
+SC.WriteLine(@"I can see the fear in your eyes—you know you don’t belong in here with me. You’ve got two left feet and a glass jaw, perfect combo for a quick nap. 
+After I’m done with you, they’ll be scraping you off the mat. Hope your corner’s got an extra towel—because you’re gonna need it.");
+break;
+
+case (int)(3):
+SC.WriteLine(@"Keep talking while you can, 'cause once that bell rings, your mouth’s staying shut. You’ve got a lot of heart, but I’m about to break it. 
+When I hit you, you won’t just feel it—you’ll hear it. They’re calling this a fight, but for you? It’s just survival.");
+break;
+
+case (int)(4):
+SC.WriteLine(@"Look at you, standing there like you’ve got a chance. You’re the underdog for a reason, pal—everyone knows you're just a warm-up for me. 
+I’ll let you throw the first punch, just so you have something to remember before I end it. Don’t blink, or you’ll miss your own defeat.");
+break;
+
+case (int)(5):
+SC.WriteLine(@"That belt you’re holding? It’s got my name written all over it, and you’re just keeping it warm. Your punches are softer than a pillow, and I’m about to tuck you in. 
+When they raise my hand, you’ll realize you were out of your league the whole time. Get ready to kiss the canvas.");
+break;
+
+case (int)(6):
+SC.WriteLine(@"You’ve been dodging real competition your whole career, but now you’re stuck in here with me. I’ve seen faster reflexes on a punching bag. 
+I’m about to turn your lights out, and when you wake up, I’ll already be champion. You’re just one bad decision away from getting knocked out.");
+break;
+
+} // end switch
+
+} // end FIGHT_TRASHTALK
 
 void RESULT() {
 if (fight_Consed) {
     SC.WriteLine("ASCII");
-    SC.WriteLine("Placeholder Aponent mocking the player");
+    SC.WriteLine(@"What happened, champ? All that talk, and you still couldn’t back it up. You hit me with everything you had, 
+    and I’m still standing—what’s your excuse? Maybe next time, train your mouth less and your fists more. You just made my highlight reel.");
     SC.WriteLine("You Conced");
-    SC.WriteLine("Press anything to go back to start");
+    //SC.WriteLine($"You lose your bet on Aponent {} , - {Aponent1Bet},{Aponent2Bet},{Aponent1Bet} ");
+    Aponent1Bet =0;
+    Aponent2Bet =0;
+    Aponent3Bet =0;
+    SC.WriteLine("Press Enter to go back to menue");
     SC.ReadLine();
     SC.Clear();
 }
 if (fight_Draw) {
    SC.WriteLine("ASCII");
    SC.WriteLine(@"
-   Press anything to go back to start");
+   Press Enter to go back to menue");
+   //SC.WriteLine($"You lose your bet on Aponent {} , - {Aponent1Bet},{Aponent2Bet},{Aponent1Bet} ");
+   Aponent1Bet =0;
+    Aponent2Bet =0;
+    Aponent3Bet =0;
     SC.ReadLine();
     SC.Clear();
 }
 if (fight_Win) {
    SC.WriteLine("ASCII");
    Coins =+ 100;
-   SC.WriteLine($"You get 100 Coins, well done!");
-   SC.WriteLine("Press anything to go back to start");
+   SC.WriteLine($"You get 10 Coins, Well Done!");
+   Aponent1Bet = Aponent1Bet * 2;
+    Aponent2Bet =  Aponent2Bet * 2;
+    Aponent3Bet =  Aponent3Bet * 2;
+   //SC.writeLine($"Your bet agains aponen { } suceded you get {Coins} ");
+   SC.WriteLine("Press Enter to go back to menue");
     SC.ReadLine();
     SC.Clear();
 }
 if (fight_Lose) {
    SC.WriteLine("ASCII");
-   SC.WriteLine($"You lose '-' Coins!");
-   SC.WriteLine("Press anything to go back to start");
+   SC.WriteLine(@"Look at you, flat on the ground where you belong! All that mouth, and this is how you end up? I told you I’d break you, and here you are—broken. 
+   Next time, know your place before stepping in my ring. Now, stay down where it’s safe.");
+   SC.WriteLine($"You lose 20 Coins!");
+   //SC.WriteLine($"You lose your bet on Aponent {} , - {Aponent1Bet},{Aponent2Bet},{Aponent1Bet} ");
+   Aponent1Bet =0;
+    Aponent2Bet =0;
+    Aponent3Bet =0;
+   SC.WriteLine("Press Enter to go back to menue");
     SC.ReadLine();
     SC.Clear();
     }
