@@ -49,7 +49,7 @@ int playerHelth = 200;
 int aponentHelth = 0;
 int Damage = 0;
 int Coins = 0;
-int betCoins = 0;
+int Betcoins = 0;
 int hitChance;
 
 string name;
@@ -269,7 +269,7 @@ Chosing (4) will exit the beting Hall
                         SC.WriteLine(@"
     How mutch are you willing to risk?  (1) 10 coins   (2) 30 coins  (3) 50 coins");
                         Choice = SC.ReadLine();
-                        if (Choice == "1" && Coins > 10) { Coins = Coins - 10; Aponent1bet = Aponent1bet + 10; } else if (Choice == "2" && Coins > 30) { Coins = Coins - 30; Aponent2bet = Aponent2bet + 30; } else if (Choice == "3" && Coins > 50) { Coins = Coins - 50; Aponent3bet = Aponent3bet + 50; }
+                        if (Choice == "1" && Coins > 10) { Coins = Coins - 10; Aponent1bet = Aponent1bet + 10; SC.WriteLine("stupid"); } else if (Choice == "2" && Coins > 30) { Coins = Coins - 30; Aponent1bet = Aponent1bet + 30; } else if (Choice == "3" && Coins > 50) { Coins = Coins - 50; Aponent1bet = Aponent1bet + 50; }
                         i = 0;
                     }
                     break;
@@ -280,7 +280,7 @@ Chosing (4) will exit the beting Hall
                         ART.ASCII = 104; ART.Menue();
                         SC.WriteLine("How mutch are you willing to risk?  (1) 10 coins   (2) 30 coins  (3) 50 coins");
                         Choice = SC.ReadLine();
-                        if (Choice == "1" && Coins < 10) { Coins = Coins - 10; Aponent1bet = Aponent1bet + 10; } else if (Choice == "2" && Coins < 30) { Coins = Coins - 30; Aponent2bet = Aponent2bet + 30; } else if (Choice == "3" && Coins < 50) { Coins = Coins - 50; Aponent3bet = Aponent3bet + 50; }
+                        if (Choice == "1" && Coins < 10) { Coins = Coins - 10; Aponent2bet = Aponent2bet + 10; } else if (Choice == "2" && Coins < 30) { Coins = Coins - 30; Aponent2bet = Aponent2bet + 30; } else if (Choice == "3" && Coins < 50) { Coins = Coins - 50; Aponent2bet = Aponent2bet + 50; }
                         i = 0;
                     }
                     break;
@@ -291,7 +291,7 @@ Chosing (4) will exit the beting Hall
                         ART.ASCII = 104; ART.Menue();
                         SC.WriteLine("How mutch are you willing to risk?  (1) 10 coins   (2) 30 coins  (3) 50 coins");
                         Choice = SC.ReadLine();
-                        if (Choice == "1" && Coins < 10) { Coins = Coins - 10; Aponent1bet = Aponent1bet + 10; } else if (Choice == "2" && Coins < 30) { Coins = Coins - 30; Aponent2bet = Aponent2bet + 30; } else if (Choice == "3" && Coins < 50) { Coins = Coins - 50; Aponent3bet = Aponent3bet + 50; }
+                        if (Choice == "1" && Coins < 10) { Coins = Coins - 10; Aponent3bet = Aponent3bet + 10; } else if (Choice == "2" && Coins < 30) { Coins = Coins - 30; Aponent3bet = Aponent3bet + 30; } else if (Choice == "3" && Coins < 50) { Coins = Coins - 50; Aponent3bet = Aponent3bet + 50; }
                         i = 0;
                     }
                     break;
@@ -303,6 +303,7 @@ Chosing (4) will exit the beting Hall
         } //while
     } //if
     subMenue = true;
+    //Choice = "0";
 } // BET
 
 void APONENT()
@@ -378,7 +379,7 @@ Let the fight BEGIN!");
         SC.WriteLine($"Aponents helth:{aponentHelth}  your helth:{playerHelth}  your damage delt:{Damage}");
         if (aponentId == "1") { ART.ASCII = 201; } else if (aponentId == "2") { ART.ASCII = 202; } else if (aponentId == "3") { ART.ASCII = 203; }
         SC.WriteLine("Fight Choices: (1) Punch  : (2) Kick  : (3) Block : (4) Pary  : (5) Consed  : (6) Trash Talk  :");
-        Damage = 0;
+        //Damage = 0;
 
         aponentBlock = false;
         aponentKick = false;
@@ -539,46 +540,44 @@ void RESULT()
     mainMenue = true;
     if (fightConsed)
     {
-        SC.WriteLine("ASCII");
+
         ART.ASCII = 301; ART.Result();
         SC.WriteLine(@"What happened, champ? All that talk, and you still couldn’t back it up. You hit me with everything you had, 
     and I’m still standing—what’s your excuse? Maybe next time, train your mouth less and your fists more. You just made my highlight reel.");
         SC.WriteLine("You Conced");
         //SC.WriteLine($"You lose your bet on Aponent {} , - {Aponent1bet},{Aponent2bet},{Aponent1bet} ");
-        Aponent1bet = 0;
-        Aponent2bet = 0;
-        Aponent3bet = 0;
+        if (aponentId == "1") { Aponent1bet = 0; } else if (aponentId == "2") { Aponent2bet = 0; } else if (aponentId == "3") { Aponent3bet = 0; }
+
         SC.WriteLine("Press Enter to go back to menue");
         SC.ReadLine();
         SC.Clear();
     }
     if (fightDraw)
     {
-        SC.WriteLine("ASCII");
-        ART.ASCII = 302; ART.Fighter();
+
+        ART.ASCII = 302; ART.Result();
         SC.WriteLine(@"
    Press Enter to go back to menue");
         //SC.WriteLine($"You lose your bet on Aponent {} , - {Aponent1bet},{Aponent2bet},{Aponent1bet} ");
-        Aponent1bet = 0;
-        Aponent2bet = 0;
-        Aponent3bet = 0;
+        if (aponentId == "1") { Aponent1bet = 0; } else if (aponentId == "2") { Aponent2bet = 0; } else if (aponentId == "3") { Aponent3bet = 0; }
         SC.ReadLine();
         SC.Clear();
     }
     if (fightWin)
     {
-        SC.WriteLine("ASCII");
-        ART.ASCII = 303; ART.Fighter();
-        Coins = +10;
+
+        ART.ASCII = 303; ART.Result();
         SC.WriteLine($"You get 10 Coins, Well Done!");
         Aponent1bet = Aponent1bet * 2;
         Aponent2bet = Aponent2bet * 2;
         Aponent3bet = Aponent3bet * 2;
-        Coins = Aponent3bet + Aponent2bet + Aponent1bet;
-        if (Aponent1bet < 9 || Aponent2bet < 9 || Aponent3bet < 9)
+        Betcoins = Aponent3bet + Aponent2bet + Aponent1bet;
+        if (Aponent1bet > 9 || Aponent2bet > 9 || Aponent3bet > 9)
         {
-            SC.WriteLine($"Your bet agains Aponent {aponentId} suceded, you get {Coins}");
+            SC.WriteLine($"Your bet agains Aponent {aponentId} suceded, you get {Betcoins}");
         }
+        Coins = +10;
+        Coins = +Betcoins;
 
         SC.WriteLine("Press Enter to go back to menue");
         SC.ReadLine();
@@ -586,15 +585,14 @@ void RESULT()
     }
     if (fightLose)
     {
-        SC.WriteLine("ASCII");
-        ART.ASCII = 304; ART.Fighter();
+
+        ART.ASCII = 304; ART.Result();
         SC.WriteLine(@"Look at you, flat on the ground where you belong! All that mouth, and this is how you end up? I told you I’d break you, and here you are—broken. 
    Next time, know your place before stepping in my ring. Now, stay down where it’s safe.");
         SC.WriteLine($"You lose 20 Coins!");
         //SC.WriteLine($"You lose your bet on Aponent {} , - {Aponent1bet},{Aponent2bet},{Aponent1bet} ");
-        Aponent1bet = 0;
-        Aponent2bet = 0;
-        Aponent3bet = 0;
+        if (aponentId == "1") { Aponent1bet = 0; } else if (aponentId == "2") { Aponent2bet = 0; } else if (aponentId == "3") { Aponent3bet = 0; }
+
         SC.WriteLine("Press Enter to go back to menue");
         SC.ReadLine();
         SC.Clear();
@@ -623,5 +621,6 @@ void RESTART()
     fightDraw = false;
     /* ------------------------ */
     playerHelth = 200;
+    Damage = 0;
 
 }
